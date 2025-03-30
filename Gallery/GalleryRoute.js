@@ -4,8 +4,8 @@ const { galleryPost, getGallery, deleteGalleryImg } = require("./GalleryControll
 const router = require("express").Router();
 
 
-router.post('/store-gallery', galleryPost);
-router.get('/get-gallery', verifyAdmin, getGallery);
+router.post('/store-gallery', verifyAdmin, galleryPost);
+router.get('/get-gallery', getGallery);
 router.delete('/delete-gallery-img/:public_id', deleteGalleryImg);
 
 module.exports = router;

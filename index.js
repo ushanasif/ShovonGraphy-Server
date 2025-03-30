@@ -5,11 +5,12 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const adminRouter = require('./Admins/AdminRoute');
+const sliderRouter = require('./Slider/SliderRoute');
 const galleryRouter = require('./Gallery/GalleryRoute');
 const albumRouter = require('./Albums/AlbumRoute')
 connectDB();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: ["http://localhost:5173", "http://localhost:5174"],
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use('/api/admin', adminRouter);
+app.use('/api/slider', sliderRouter);
 app.use('/api/gallery', galleryRouter);
 app.use('/api/album', albumRouter); 
 

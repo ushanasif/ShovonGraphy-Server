@@ -4,11 +4,11 @@ const { createAlbum, getAlbums, addSingleAlbumImg, deleteAlbumImg, deleteAlbum }
 const router = require("express").Router();
 
 
-router.post('/create-album', createAlbum);
-router.get('/get-albums', verifyAdmin, getAlbums);
-router.put('/add-single-album-images', addSingleAlbumImg);
-router.delete('/delete-album-image/:public_id', deleteAlbumImg);
-router.delete('/delete-album/:id', deleteAlbum);
+router.post('/create-album', verifyAdmin, createAlbum);
+router.get('/get-albums', getAlbums);
+router.put('/add-single-album-images', verifyAdmin, addSingleAlbumImg);
+router.delete('/delete-album-image/:public_id', verifyAdmin, deleteAlbumImg);
+router.delete('/delete-album/:id', verifyAdmin, deleteAlbum);
 
 
 module.exports = router;
