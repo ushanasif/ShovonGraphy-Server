@@ -13,7 +13,7 @@ connectDB();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: "https://shovongraphy-client.vercel.app",
+  origin: "https://shovongraphy.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
