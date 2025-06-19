@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/register', adminRegister);
 router.post('/login', adminLogin);
-router.get('/getAdmin', getAdminDetail);
+router.get('/getAdmin', verifyAdmin, getAdminDetail);
 router.post('/logout', verifyAdmin, adminLogout);
 router.get('/refresh-token', refreshToken);
 
