@@ -57,6 +57,7 @@ const adminLogin = async(req, res) => {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true, // Prevent JavaScript access
             secure: true,
+            sameSite: 'None'
         });
 
 
