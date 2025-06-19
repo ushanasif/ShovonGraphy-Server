@@ -98,13 +98,13 @@ const adminLogout = async(req, res) => {
 const refreshToken = async(req, res) => {
     const refreshToken = req?.cookies?.refreshToken;
     if(!refreshToken){
-        return res.status(401).json({message: 'Unauthorized!'})
+        return res.status(401).json({message: 'Unauthorized! one'})
     }
 
    try {
     const refreshTokenExist = await AdminModel.findOne({refreshToken});
     if(!refreshTokenExist){
-        return res.status(401).json({message: 'Unauthorized!'})
+        return res.status(401).json({message: 'Unauthorized! two'})
     }
     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
     if(!decoded || decoded.id !== refreshTokenExist._id.toString()){
