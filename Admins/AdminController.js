@@ -56,7 +56,7 @@ const adminLogin = async(req, res) => {
         res.cookie('refreshToken', refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true, // Prevent JavaScript access
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
         });
 
 
