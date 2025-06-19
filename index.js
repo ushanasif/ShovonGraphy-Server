@@ -27,6 +27,11 @@ app.use('/api/slider', sliderRouter);
 app.use('/api/gallery', galleryRouter);
 app.use('/api/album', albumRouter); 
 
+app.get('/', (req, res)=>{
+  res.send("ShovonGraphy")
+}
+);
+
 
 app.listen(PORT, ()=>{ 
     console.log(`Server is running successfully at http://localhost:${PORT}`);
