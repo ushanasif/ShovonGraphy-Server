@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: "https://shovongraphy.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  //origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], 
   credentials: true
 }));
 

@@ -5,23 +5,21 @@ const GalleryModel = require("./GalleryModel");
 
 
 const galleryPost = async(req, res) => {
-    try {
-        const {public_id, imgUrl} = req.body;
+     try {
+        const {data} = req.body;
+        console.log(data);
 
-        const imgExist = await GalleryModel.findOne({public_id, imgUrl});
-
-        if(imgExist){
-            return res.status(400).json({error: true, message: "Image id already exist"});
+        if(!Array.isArray(data) || data.length === 0){
+            return res.status(400).json({ error: true, message: "No slider data provided" });
         }
 
-        const image = new GalleryModel({public_id, imgUrl});
-        const saveImage = await image.save();
+        const finalData = data.map((val) => {
+            return {public_id: val.public_id, imgUrl: val.secure_url}
+        })
 
-        if(!saveImage){
-            return res.status(400).json({error: true, message: "Gallery image not saved"});  
-        }
+        GalleryModel.insertMany(finalData);
 
-        res.status(200).json({success: true, message: "Gallery image saved successfully"}) 
+        res.status(200).json({success: true, message: "Slider image saved successfully"}) 
     } catch (error) {
         console.log(error.message);
         res.status(500).json({error: true, message: error.message});

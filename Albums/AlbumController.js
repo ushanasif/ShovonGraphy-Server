@@ -8,9 +8,9 @@ const createAlbum = async(req, res) => {
         const {albumName, coverImg} = req.body;
 
         const create = new AlbumModel({albumName, coverImg});
-        const saveAlbum = await create.save();
+        await create.save();
 
-        return successResponse(res, 200, 'Album created successfully');
+        return successResponse(res, 200, true, 'Album created successfully'); 
     } catch (error) {
         res.status(500).json({error: true, message: error.message});
     }
@@ -31,27 +31,32 @@ const getAlbums = async(req, res) => {
 
 const addSingleAlbumImg = async(req, res) => {
     try {
-        const {id, public_id, imgUrl} = req.body;
-        console.log(req.body);
-        const albumExist = await AlbumModel.findOne({_id: id});
+  const { id, allImages } = req.body;
 
-        if(!albumExist){
-            return res.status(400).json({error: true, message: "Album not found"})
-        }
+  const albumExist = await AlbumModel.findOne({ _id: id });
 
-        const addImage = await AlbumModel.updateOne({$push: {albumImages: {public_id, imgUrl}}});
+  if (!albumExist) {
+    return res.status(400).json({ error: true, message: "Album not found" });
+  }
 
-        if(!addImage){
-            return res.status(400).json({error: true, message: "Image cannot be added to the album"});
-        }
+  const addImages = await AlbumModel.updateOne(
+    { _id: id }, // <-- Correct filter
+    { $push: { albumImages: { $each: allImages } } } // <-- Push multiple
+  );
+  console.log(addImages);
+  if (addImages.modifiedCount === 0) {
+    return res.status(400).json({ error: true, message: "Images could not be added" });
+  }
 
-       
+  return res.status(200).json({
+    success: true,
+    message: "Images added to the album successfully"
+  });
 
-        return successResponse(res, 200, "Image added to the album successfully")
+} catch (error) {
+  res.status(500).json({ error: true, message: error.message });
+}
 
-    } catch (error) {
-        res.status(500).json({error: true, message: error.message});
-    }
 }
 
 const deleteAlbumImg = async(req, res) => {

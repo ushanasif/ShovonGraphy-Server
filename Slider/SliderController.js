@@ -4,22 +4,20 @@ const SliderModel = require("./SliderModel");
 
 
 
-const addSlider = async(req, res) => {
+const addSlider = async(req, res) => { 
     try {
-        const {public_id, imgUrl} = req.body;
+        const {data} = req.body;
+        console.log(data);
 
-        const imgExist = await SliderModel.findOne({public_id, imgUrl});
-
-        if(imgExist){
-            return res.status(400).json({error: true, message: "Slider Image id already exist"});
+        if(!Array.isArray(data) || data.length === 0){
+            return res.status(400).json({ error: true, message: "No slider data provided" });
         }
 
-        const image = new SliderModel({public_id, imgUrl});
-        const saveImage = await image.save();
+        const finalData = data.map((val) => {
+            return {public_id: val.public_id, imgUrl: val.secure_url}
+        })
 
-        if(!saveImage){
-            return res.status(400).json({error: true, message: "Slider image not saved"});  
-        }
+        SliderModel.insertMany(finalData);
 
         res.status(200).json({success: true, message: "Slider image saved successfully"}) 
     } catch (error) {
@@ -61,7 +59,7 @@ const deleteSlider = async(req, res) => {
             return res.status(400).json({error: true, message: "Image cannot be deleted from DB"})
         }
         
-        return successResponse(res, 200, "Image is deleted successfully");
+        return successResponse(res, 200, true, "Image is deleted successfully");
     } catch (error) {
         res.status(500).json({error: true, message: error.message});
     }

@@ -6,7 +6,7 @@ const router = require("express").Router();
 
 router.post('/create-album', verifyAdmin, createAlbum);
 router.get('/get-albums', getAlbums);
-router.put('/add-single-album-images', verifyAdmin, addSingleAlbumImg);
+router.patch('/add-single-album-images', verifyAdmin, addSingleAlbumImg);
 router.delete('/delete-album-image/:public_id', verifyAdmin, deleteAlbumImg);
 router.delete('/delete-album/:id', verifyAdmin, deleteAlbum);
 

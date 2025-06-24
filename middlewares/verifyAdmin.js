@@ -6,7 +6,7 @@ const verifyToken = async (req, res, next) => {
   const header = req?.headers?.authorization;
 
   const accessToken = header?.split(" ")[1];
-
+ 
   if (!refreshToken) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
